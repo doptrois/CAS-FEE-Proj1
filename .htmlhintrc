@@ -1,0 +1,11 @@
+{
+  "doctype-html5": true,
+  "inline-style-disabled": true,
+  "inline-script-disabled": true,
+  "space-tab-mixed-disabled": "space",
+  "head-script-disabled": true,
+  "style-disabled": true,
+  "attr-value-not-empty": false,
+  "attr-lowercase": ["clipPath", "viewBox", "clipPathUnits"],
+  "tagname-lowercase": true
+}
