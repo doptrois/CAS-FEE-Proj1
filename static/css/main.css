@@ -43,7 +43,7 @@ body {
 .button {
     background-color: #191919;
     color: #fff;
-    border: 0;
+    border: 1px dotted #353535;
     padding: 1.5em 3.5em;
     cursor: pointer;
     transition: box-shadow 0.125s;
@@ -155,6 +155,10 @@ body {
     flex-wrap: wrap;
 }
 
+.sort__item {
+    margin-right: 2px;
+}
+
 .notes {
     grid-area: notes;
     overflow-y: auto;
@@ -180,6 +184,7 @@ body {
     grid-template-areas: "note-importance note-content note-interactions";
     margin: 0 0 var(--layout-gaps);
     background-color: #191919;
+    border: 1px dotted #353535;
 }
 
 .note--done:not(:hover) {
