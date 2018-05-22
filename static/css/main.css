@@ -1,3 +1,19 @@
+/**
+ * Scrollbars
+ */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #191919;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
 :root {
     --main-bg-color: #111;
     --layout-gaps: 20px;
@@ -13,6 +29,7 @@ body {
     font-family: sans-serif;
     line-height: 1.5em;
     background-color: #111;
+    overflow-y: auto;
 }
 
 /**
@@ -48,6 +65,7 @@ body {
     cursor: pointer;
     transition: box-shadow 0.125s;
     outline: 0;
+    text-decoration: none;
 }
 
 .button__icon {
@@ -104,18 +122,12 @@ body {
 }
 
 /**
- * Layout - Overview
+ * Layout - Standard
  */
-.overview {
+.container {
     background-color: var(--main-bg-color);
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto 1fr;
-    grid-template-areas:
-        "add switcher"
-        "sort status"
-        "notes status";
     grid-gap: var(--layout-gaps);
     padding: var(--layout-gaps);
     height: 100%;
@@ -123,13 +135,31 @@ body {
 }
 
 /**
+ * Layout - Overview
+ */
+.container--overview {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+        "add switcher"
+        "sort status"
+        "notes status";
+}
+
+/**
  * Layout - Add/Edit
  */
+.container--add-edit {
+    grid-template-rows: 1fr auto;
+    max-height: none;
+    min-height: 100%;
+    height: auto;
+}
 
 /**
  * Style switch
  */
-.overview--layout-day {
+.container--layout-day {
     filter: invert(1);
 }
 
@@ -143,6 +173,9 @@ body {
     white-space: nowrap;
 }
 
+/**
+ * Filter
+ */
 .sort {
     grid-area: sort;
 }
@@ -159,23 +192,14 @@ body {
     margin-right: 2px;
 }
 
+/**
+ * Notes
+ */
 .notes {
     grid-area: notes;
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 10px;
-}
-
-.notes::-webkit-scrollbar {
-    width: 10px;
-}
-
-.notes::-webkit-scrollbar-track {
-    background: #191919;
-}
-
-.notes::-webkit-scrollbar-thumb {
-    background: #333;
 }
 
 .note {
@@ -196,6 +220,7 @@ body {
     grid-area: note-importance;
     margin: 0;
     background-color: #1f1f1f;
+    cursor: help;
 }
 
 .note__importance--1 {
@@ -360,12 +385,66 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/**
+ * Status
+ */
 .status {
     grid-area: status;
     background-color: #191919;
     padding: 1em;
 }
 
+/**
+ * Add/Edit
+ */
+.add-edit__fieldset {
+    padding: 0;
+    border: 0;
+}
+
+.add-edit__group {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 20px;
+    grid-template-rows: auto 1fr auto auto;
+    height: 100%;
+}
+
+.add-edit__group--actions {
+    grid-template-rows: unset;
+}
+
+.add-edit__label {
+    cursor: pointer;
+}
+
+.add-edit__input {
+    background-color: inherit;
+    border: 2px solid #4a4a4a;
+    color: inherit;
+    padding: 20px;
+}
+
+.add-edit__input:focus {
+    border-color: #fff;
+}
+
+.add-edit__input:required:valid {
+    background-image: url(../images/iconmonstr-check-mark-1.svg);
+    background-position: right 20px center;
+    background-repeat: no-repeat;
+    background-size: auto 1em;
+    padding-right: 3.75em;
+}
+
+.add-edit__input:required:valid:focus {
+    border-color: #43d08a;
+    outline: none;
+}
+
+/**
+ * Footer
+ */
 .footer {
     grid-area: footer;
     position: relative;
