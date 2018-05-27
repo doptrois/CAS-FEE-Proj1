@@ -7,28 +7,42 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #191919;
+    background: var(--dark-grey);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333;
+    background: var(--brighter-grey);
 }
 
+/**
+ * Variables
+ */
 :root {
     --main-bg-color: #111;
     --layout-gaps: 20px;
+    --base-font-color: #fff;
+    --dark-grey: #191919;
+    --grey: #353535;
+    --bright-grey: #222;
+    --brighter-grey: #353535;
+    --green: #43d08a;
+    --form-input-border: #4a4a4a;
+    --note-interactions-width-height: 50px;
 }
 
+/**
+ * Base formattings
+ */
 html,
 body {
     height: 100%;
 }
 
 body {
-    color: #fff;
+    color: var(--base-font-color);
     font-family: sans-serif;
     line-height: 1.5em;
-    background-color: #111;
+    background-color: var(--main-bg-color);
     overflow-y: auto;
 }
 
@@ -58,9 +72,9 @@ body {
  * Buttons
  */
 .button {
-    background-color: #191919;
-    color: #fff;
-    border: 1px dotted #353535;
+    background-color: var(--dark-grey);
+    color: inherit;
+    border: 1px dotted var(--grey);
     padding: 1.5em 3.5em;
     cursor: pointer;
     transition: box-shadow 0.125s;
@@ -81,12 +95,12 @@ body {
 
 .button:hover,
 .button:focus {
-    background-color: #222;
+    background-color: var(--bright-grey);
 }
 
 .button--active,
 .button--active:hover {
-    background-color: #333;
+    background-color: var(--brighter-grey);
     position: relative;
     top: -5px;
 }
@@ -97,7 +111,7 @@ body {
     height: 0;
     border-style: solid;
     border-width: 10px 14px 0 14px;
-    border-color: #333 transparent transparent transparent;
+    border-color: var(--brighter-grey) transparent transparent transparent;
     position: absolute;
     bottom: -10px;
     left: 50%;
@@ -163,13 +177,16 @@ body {
     filter: invert(1);
 }
 
-.add {
-    grid-area: add;
+.switcher {
+    grid-area: switcher;
     white-space: nowrap;
 }
 
-.switcher {
-    grid-area: switcher;
+/**
+ * Add button
+ */
+.add {
+    grid-area: add;
     white-space: nowrap;
 }
 
@@ -204,11 +221,11 @@ body {
 
 .note {
     display: grid;
-    grid-template-columns: 20px 1fr 50px;
+    grid-template-columns: 20px 1fr var(--note-interactions-width-height);
     grid-template-areas: "note-importance note-content note-interactions";
     margin: 0 0 var(--layout-gaps);
-    background-color: #191919;
-    border: 1px dotted #353535;
+    background-color: var(--dark-grey);
+    border: 1px dotted var(--brighter-grey);
 }
 
 .note--done:not(:hover) {
@@ -219,7 +236,7 @@ body {
 .note__importance {
     grid-area: note-importance;
     margin: 0;
-    background-color: #1f1f1f;
+    background-color: var(--brighter-grey);
     cursor: help;
 }
 
@@ -227,8 +244,8 @@ body {
     background-image:
         linear-gradient(
             to right,
-            #fff,
-            #fff 33%,
+            var(--base-font-color),
+            var(--base-font-color) 33%,
             transparent 33%
         );
 }
@@ -237,8 +254,8 @@ body {
     background-image:
         linear-gradient(
             to right,
-            #fff,
-            #fff 66%,
+            var(--base-font-color),
+            var(--base-font-color) 66%,
             transparent 66%
         );
 }
@@ -247,8 +264,8 @@ body {
     background-image:
         linear-gradient(
             to right,
-            #fff,
-            #fff 100%,
+            var(--base-font-color),
+            var(--base-font-color) 100%,
             transparent 100%
         );
 }
@@ -331,7 +348,7 @@ body {
 
 .note__interactions {
     grid-area: note-interactions;
-    background-color: #1f1f1f;
+    background-color: var(--bright-grey);
 }
 
 .note__fieldset {
@@ -343,7 +360,7 @@ body {
 .note__label {
     display: flex;
     width: 100%;
-    height: 50px;
+    height: var(--note-interactions-width-height);
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -366,11 +383,11 @@ body {
 .note__edit {
     display: flex;
     width: 100%;
-    height: 50px;
+    height: var(--note-interactions-width-height);
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: #292929;
+    background-color: var(--brighter-grey);
     border: 0;
     color: inherit;
 }
@@ -390,7 +407,7 @@ body {
  */
 .status {
     grid-area: status;
-    background-color: #191919;
+    background-color: var(--dark-grey);
     padding: 1em;
 }
 
@@ -405,9 +422,14 @@ body {
 .add-edit__group {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-gap: 20px;
+    grid-gap: var(--layout-gaps);
     grid-template-rows: auto 1fr auto auto;
     height: 100%;
+}
+
+.add-edit__group--importance {
+    display: block;
+    padding: 20px 0;
 }
 
 .add-edit__group--actions {
@@ -416,17 +438,25 @@ body {
 
 .add-edit__label {
     cursor: pointer;
+    background-color: inherit;
+    border: 2px solid var(--form-input-border);
+    color: inherit;
+    border-left: 0;
+    border-right: 0;
+    padding: 20px 0;
+    border-color: transparent;
+    line-height: 1;
 }
 
 .add-edit__input {
     background-color: inherit;
-    border: 2px solid #4a4a4a;
+    border: 2px solid var(--form-input-border);
     color: inherit;
     padding: 20px;
 }
 
 .add-edit__input:focus {
-    border-color: #fff;
+    border-color: var(--base-font-color);
 }
 
 .add-edit__input:required:valid {
@@ -438,26 +468,6 @@ body {
 }
 
 .add-edit__input:required:valid:focus {
-    border-color: #43d08a;
+    border-color: var(--green);
     outline: none;
-}
-
-/**
- * Footer
- */
-.footer {
-    grid-area: footer;
-    position: relative;
-    display: none;
-    padding-top: var(--layout-gaps);
-}
-
-.footer::before {
-    content: "";
-    left: -10px;
-    right: -10px;
-    top: 0;
-    height: 1px;
-    background-color: #fff;
-    position: absolute;
 }
