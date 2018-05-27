@@ -21,20 +21,18 @@
                     <label class="add-edit__label" for="add-edit__desciption">Description</label>
                     <textarea class="add-edit__input add-edit__input--textarea" id="add-edit__desciption" name="add-edit__desciption" placeholder="Description" required></textarea>
 
-                    <label class="add-edit__label" for="add-edit__importance-0">Importance</label>
-                    <div>
-                        <input class="add-edit__radio add-edit__radio--importance" type="radio" name="add-edit__importance" value="add-edit__importance-0" id="add-edit__importance-0" title="not important" />
-                        <input class="add-edit__radio add-edit__radio--importance" type="radio" name="add-edit__importance" value="add-edit__importance-1" id="add-edit__importance-1" title="important" />
-                        <input class="add-edit__radio add-edit__radio--importance" type="radio" name="add-edit__importance" value="add-edit__importance-2" id="add-edit__importance-2" title="very important" />
-                        <input class="add-edit__radio add-edit__radio--importance" type="radio" name="add-edit__importance" value="add-edit__importance-3" id="add-edit__importance-3" title="extremely important" />
+                    <label class="add-edit__label" for="add-edit__importance-range">Importance</label>
+                    <div class="add-edit__group add-edit__group--importance">
+                        <input id="add-edit__importance-range" type="range" min="0" max="3" step="1">
+                        <div class="test"></div>
                     </div>
                     <label class="add-edit__label" for="add-edit__date">Deadline</label>
                     <input class="add-edit__input add-edit__input--date" type="date" name="add-edit__date" id="add-edit__date" title="Date on which it must be completed" required>
                 </div>
             </fieldset>
             <fieldset class="add-edit__fieldset">
+                <legend class="visuallyhidden">Save or cancel note</legend>
                 <div class="add-edit__group add-edit__group--actions">
-                    <legend class="visuallyhidden">Save or cancel note</legend>
                     <a class="button button--danger" href="/">Cancel</a>
                     <button class="button button--save" type="submit"><span class="button__text">Save</span></button>
                 </div>
