@@ -364,6 +364,9 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background-color: inherit;
+    color: inherit;
+    border: 0;
 }
 
 .note__label::before {
