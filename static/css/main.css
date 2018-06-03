@@ -7,7 +7,7 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--dark-grey);
+    background: var(--grey);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -21,13 +21,13 @@
     --main-bg-color: #111;
     --layout-gaps: 20px;
     --base-font-color: #fff;
-    --dark-grey: #191919;
-    --grey: #353535;
+    --grey: #191919;
     --bright-grey: #222;
     --brighter-grey: #353535;
     --green: #43d08a;
     --form-input-border: #4a4a4a;
-    --note-interactions-width-height: 50px;
+    --note-interactions: 50px;
+    --note-interactions-hover: #454545;
 }
 
 /**
@@ -72,9 +72,9 @@ body {
  * Buttons
  */
 .button {
-    background-color: var(--dark-grey);
+    background-color: var(--grey);
     color: inherit;
-    border: 1px dotted var(--grey);
+    border: 1px dotted var(--brighter-grey);
     padding: 1.5em 3.5em;
     cursor: pointer;
     transition: box-shadow 0.125s;
@@ -221,10 +221,10 @@ body {
 
 .note {
     display: grid;
-    grid-template-columns: 20px 1fr var(--note-interactions-width-height);
+    grid-template-columns: 20px 1fr var(--note-interactions);
     grid-template-areas: "note-importance note-content note-interactions";
     margin: 0 0 var(--layout-gaps);
-    background-color: var(--dark-grey);
+    background-color: var(--grey);
     border: 1px dotted var(--brighter-grey);
 }
 
@@ -245,8 +245,8 @@ body {
         linear-gradient(
             to right,
             var(--base-font-color),
-            var(--base-font-color) 33%,
-            transparent 33%
+            var(--base-font-color) 10%,
+            transparent 10%
         );
 }
 
@@ -255,8 +255,8 @@ body {
         linear-gradient(
             to right,
             var(--base-font-color),
-            var(--base-font-color) 66%,
-            transparent 66%
+            var(--base-font-color) 50%,
+            transparent 50%
         );
 }
 
@@ -360,7 +360,7 @@ body {
 .note__label {
     display: flex;
     width: 100%;
-    height: var(--note-interactions-width-height);
+    height: var(--note-interactions);
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -386,13 +386,18 @@ body {
 .note__edit {
     display: flex;
     width: 100%;
-    height: var(--note-interactions-width-height);
+    height: var(--note-interactions);
     align-items: center;
     justify-content: center;
     cursor: pointer;
     background-color: var(--brighter-grey);
     border: 0;
     color: inherit;
+}
+
+.note__interactions-item:hover,
+.note__interactions-item:focus {
+    background-color: var(--note-interactions-hover);
 }
 
 .note__edit::before {
@@ -405,12 +410,20 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.note__edit--delete {
+    background-color: var(--bright-grey);
+}
+
+.note__edit--delete::before {
+    content: "\f014";
+}
+
 /**
  * Status
  */
 .status {
     grid-area: status;
-    background-color: var(--dark-grey);
+    background-color: var(--grey);
     padding: 1em;
 }
 
