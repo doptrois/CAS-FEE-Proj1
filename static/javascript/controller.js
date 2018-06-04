@@ -1,13 +1,19 @@
 /* eslint-disable */
-import View from './view.js';
-
-export class Controller {
-    constructor(sth) {
-        this.sth = sth;
+export default class Controller {
+    constructor(model) {
+        this.model = model;
+        console.log(model);
+        document.querySelector('.button--switcher').addEventListener('click', function(event) {
+            document.querySelector('.container').classList.toggle('container--layout-day');
+            Controller.onCurrentStyleChange();
+        });
     }
 
     // User settings events
-    onCurrentStyleChange() {}
+    static onCurrentStyleChange() {
+        console.log(this.model);
+        // model.setCurrentStyle();
+    }
     onSortOptionChange() {}
     onShowFinishedChange() {}
 
@@ -21,5 +27,3 @@ export class Controller {
     onPutNote(contents) {}
     onPostNote(contents) {}
 }
-
-export default { Controller };
