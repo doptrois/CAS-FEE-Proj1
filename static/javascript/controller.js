@@ -1,17 +1,15 @@
 /* eslint-disable */
 export default class Controller {
     constructor(model) {
-        this.model = model;
-        console.log(model);
-        document.querySelector('.button--switcher').addEventListener('click', function(event) {
+        document.querySelector('.button--switcher').addEventListener('click', () => {
             document.querySelector('.container').classList.toggle('container--layout-day');
-            Controller.onCurrentStyleChange();
+            Controller.onCurrentStyleChange(model);
         });
     }
 
     // User settings events
-    static onCurrentStyleChange() {
-        console.log(this.model);
+    static onCurrentStyleChange(model) {
+        model.setCurrentStyle();
         // model.setCurrentStyle();
     }
     onSortOptionChange() {}
