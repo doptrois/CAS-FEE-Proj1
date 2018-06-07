@@ -2,8 +2,6 @@
 export default class Model {
     constructor() {
 
-        console.log('model loaded!');
-
         if (!localStorage['UserSettings']) {
             // Inital user settings on first run
             var data = [
@@ -67,6 +65,15 @@ export default class Model {
                     "content": "The again Text again",
                     "creationDate": "2018-06-02",
                     "deadlineDate": "2018-08-12",
+                    "importance": 0,
+                    "finished": false
+                },
+                {
+                    "id": 5,
+                    "title": "Example Six",
+                    "content": "Lorem ipsum",
+                    "creationDate": "2018-06-02",
+                    "deadlineDate": "2018-08-12",
                     "importance": 3,
                     "finished": true
                 }
@@ -81,16 +88,19 @@ export default class Model {
     setCurrentStyle() {
         if(this.userSettings.currentStyle == 'black') {
             this.userSettings.currentStyle = 'white';
+            localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"currentStyle": "white"})]);
         } else {
             this.userSettings.currentStyle = 'black';
+            localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"currentStyle": "black"})]);
         }
-        console.log(this.userSettings.currentStyle);
     }
     setSortOption(option) {
         this.userSettings.sortOption = option;
+        localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"sortOption": option})]);
     }
     setShowFinished(yesno) {
         this.userSettings.showFinished = yesno;
+        localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"showFinished": yesno})]);
     }
 
     // Sorted notes
@@ -99,7 +109,21 @@ export default class Model {
     getShowMostImportantNotes() {}
 
     // Notes
-    deleteNote(id) { return id; }
+    finishUnfinishNote(id) {
+        this.noteItems.map((noteItem) => {
+            if(noteItem.id == id) {
+                const doneUndone = noteItem.finished ? false : true;
+                return Object.assign(noteItem, {"finished": doneUndone});
+            } else {
+                return noteItem;
+            };
+        });
+        localStorage['NoteItems'] = JSON.stringify(this.noteItems);
+    }
+    deleteNote(id) {
+        this.noteItems = this.noteItems.filter(noteItem => noteItem.id != id);
+        localStorage['NoteItems'] = JSON.stringify(this.noteItems);
+    }
     putNote(contents) { return contents; }
     postNote(contents) { return contents; }
 }
