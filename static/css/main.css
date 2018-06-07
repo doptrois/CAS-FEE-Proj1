@@ -174,7 +174,7 @@ body {
 /**
  * Style switch
  */
-.container--layout-day {
+.container--white {
     filter: invert(1);
 }
 
@@ -227,6 +227,10 @@ body {
     margin: 0 0 var(--layout-gaps);
     background-color: var(--grey);
     border: 1px dotted var(--brighter-grey);
+}
+
+.note--deleted {
+    display: none;
 }
 
 .note--done:not(:hover) {
