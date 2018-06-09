@@ -27,8 +27,8 @@ export default class Model {
                     "id": 0,
                     "title": "Example One",
                     "content": "Some text",
-                    "creationDate": "2018-06-02",
-                    "deadlineDate": "2018-12-28",
+                    "creationDate": "2010-01-02",
+                    "deadlineDate": "2020-12-28",
                     "importance": 0,
                     "finished": false
                 },
@@ -36,8 +36,8 @@ export default class Model {
                     "id": 1,
                     "title": "Example Two",
                     "content": "Some other text",
-                    "creationDate": "2018-06-02",
-                    "deadlineDate": "2018-12-23",
+                    "creationDate": "2014-06-02",
+                    "deadlineDate": "2015-12-23",
                     "importance": 1,
                     "finished": false
                 },
@@ -45,8 +45,8 @@ export default class Model {
                     "id": 2,
                     "title": "Example Three",
                     "content": "Some other text again",
-                    "creationDate": "2018-06-02",
-                    "deadlineDate": "2018-12-01",
+                    "creationDate": "2012-06-02",
+                    "deadlineDate": "2012-12-01",
                     "importance": 2,
                     "finished": false
                 },
@@ -54,8 +54,8 @@ export default class Model {
                     "id": 3,
                     "title": "Example Four",
                     "content": "Text again",
-                    "creationDate": "2018-06-02",
-                    "deadlineDate": "2018-10-01",
+                    "creationDate": "2014-06-02",
+                    "deadlineDate": "2028-10-01",
                     "importance": 3,
                     "finished": false
                 },
@@ -63,8 +63,8 @@ export default class Model {
                     "id": 4,
                     "title": "Example Five",
                     "content": "The again Text again",
-                    "creationDate": "2018-06-02",
-                    "deadlineDate": "2018-08-12",
+                    "creationDate": "2009-06-02",
+                    "deadlineDate": "2018-12-29",
                     "importance": 0,
                     "finished": false
                 },
@@ -72,8 +72,8 @@ export default class Model {
                     "id": 5,
                     "title": "Example Six",
                     "content": "Lorem ipsum",
-                    "creationDate": "2018-06-02",
-                    "deadlineDate": "2018-08-12",
+                    "creationDate": "2001-06-02",
+                    "deadlineDate": "2018-09-14",
                     "importance": 3,
                     "finished": true
                 }
@@ -86,27 +86,38 @@ export default class Model {
 
     // User settings
     setCurrentStyle() {
-        if(this.userSettings.currentStyle == 'black') {
-            this.userSettings.currentStyle = 'white';
-            localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"currentStyle": "white"})]);
-        } else {
-            this.userSettings.currentStyle = 'black';
-            localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"currentStyle": "black"})]);
-        }
+        const style = this.userSettings.currentStyle == 'black' ? 'white' : 'black';
+        this.userSettings.currentStyle = style;
+        localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"currentStyle": style})]);
     }
     setSortOption(option) {
         this.userSettings.sortOption = option;
         localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"sortOption": option})]);
     }
-    setShowFinished(yesno) {
+    setShowFinished() {
+        let yesno = this.userSettings.showFinished ? false : true;
         this.userSettings.showFinished = yesno;
         localStorage['UserSettings'] = JSON.stringify([Object.assign(JSON.parse(localStorage["UserSettings"])[0], {"showFinished": yesno})]);
     }
 
     // Sorted notes
-    getShowNewestNotes() {}
-    getShowUpcomingNotes() {}
-    getShowMostImportantNotes() {}
+    getNewestNotes() {
+        return this.noteItems.sort((a, b) => {
+            let timestampA = Date.parse(new Date(a.creationDate.split('-')[0], a.creationDate.split('-')[1], a.creationDate.split('-')[2]));
+            let timestampB = Date.parse(new Date(b.creationDate.split('-')[0], b.creationDate.split('-')[1], b.creationDate.split('-')[2]));
+            return timestampA < timestampB;
+        });
+    }
+    getUpcomingNotes() {
+        return this.noteItems.sort((a, b) => {
+            let timestampA = Date.parse(new Date(a.deadlineDate.split('-')[0], a.deadlineDate.split('-')[1], a.deadlineDate.split('-')[2]));
+            let timestampB = Date.parse(new Date(b.deadlineDate.split('-')[0], b.deadlineDate.split('-')[1], b.deadlineDate.split('-')[2]));
+            return timestampA > timestampB;
+        });
+    }
+    getMostImportantNotes() {
+        return this.noteItems.sort((a, b) => a.importance < b.importance);
+    }
 
     // Notes
     finishUnfinishNote(id) {
