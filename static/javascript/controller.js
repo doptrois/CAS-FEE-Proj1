@@ -1,12 +1,7 @@
-
 export default class Controller {
-    constructor(model) {
+    constructor(model, view) {
         this.model = model;
-        // this.view = new View();
-
-        // Load and set saved app style
-        // this.view.changeCurrentStyle();
-        document.querySelector('.container').classList.add(`container--${this.model.userSettings.currentStyle}`);
+        this.view = view;
 
         // Event handlers
         // Style switcher
@@ -48,8 +43,7 @@ export default class Controller {
 
     // User settings events
     onCurrentStyleChange() {
-        // this.view.changeCurrentStyle();
-        document.querySelector('.container').classList.toggle('container--white');
+        this.view.changeCurrentStyle();
         this.model.setCurrentStyle();
     }
     onSortOptionChange(option) {
@@ -78,32 +72,27 @@ export default class Controller {
     // Sort events
     onShowNewestNotes() {
         const notes = this.model.getNewestNotes();
-        // this.view.updateShownNotes(notes);
+        this.view.updateShownNotes(notes);
     }
     onShowUpcomingNotes() {
         const notes = this.model.getUpcomingNotes();
-        // this.view.updateShownNotes(notes);
+        this.view.updateShownNotes(notes);
     }
     onShowMostImportantNotes() {
         const notes = this.model.getMostImportantNotes();
-        // this.view.updateShownNotes(notes);
+        this.view.updateShownNotes(notes);
     }
 
     // Note events
     onExpandCollapsNote(id) {
-        const note = document.querySelector(`[data-note-id="${id}"]`);
-        note.querySelector('.note__title').classList.toggle('note__title--expanded');
-        note.querySelector('.note__paragraph').classList.toggle('note__paragraph--expanded');
+        this.view.expandCollapsNote(id);
     }
     onFinishUnfinishNote(id) {
-        const note = document.querySelector(`[data-note-id="${id}"]`);
-        note.classList.toggle('note--done');
-        note.querySelector('.note__interactions-item--check').classList.toggle('note__label--checked');
+        this.view.changeFinishState(id);
         this.model.finishUnfinishNote(id);
     }
     onDeleteNote(id) {
-        const note = document.querySelector(`[data-note-id="${id}"]`);
-        note.classList.toggle('note--deleted');
+        this.view.hideNote(id);
         this.model.deleteNote(id);
     }
     onPutNote(contents) {}
