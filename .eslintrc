@@ -7,11 +7,11 @@
     "commonjs": true
   },
   "globals": {
-    #"example": 1
+    "Handlebars": true
   },
   "rules": {
-    # "strict": 1
     "indent": ["error", 4],
+    "class-methods-use-this": [0],
     "import/extensions": "always"
   }
 }
