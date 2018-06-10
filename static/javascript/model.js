@@ -111,19 +111,28 @@ export default class Model {
             const timestampA = Date.parse(new Date(a.creationDate.split('-')[0], a.creationDate.split('-')[1], a.creationDate.split('-')[2]));
             const timestampB = Date.parse(new Date(b.creationDate.split('-')[0], b.creationDate.split('-')[1], b.creationDate.split('-')[2]));
             return timestampA < timestampB;
-        }).filter(noteItem => noteItem.finished === this.userSettings.showFinished);
+        }).filter((noteItem) => {
+            if (this.userSettings.showFinished) return true;
+            return noteItem.finished === false;
+        });
     }
     getUpcomingNotes() {
         return this.noteItems.sort((a, b) => {
             const timestampA = Date.parse(new Date(a.deadlineDate.split('-')[0], a.deadlineDate.split('-')[1], a.deadlineDate.split('-')[2]));
             const timestampB = Date.parse(new Date(b.deadlineDate.split('-')[0], b.deadlineDate.split('-')[1], b.deadlineDate.split('-')[2]));
             return timestampA > timestampB;
-        }).filter(noteItem => noteItem.finished === this.userSettings.showFinished);
+        }).filter((noteItem) => {
+            if (this.userSettings.showFinished) return true;
+            return noteItem.finished === false;
+        });
     }
     getMostImportantNotes() {
         return this.noteItems
             .sort((a, b) => a.importance < b.importance)
-            .filter(noteItem => noteItem.finished === this.userSettings.showFinished);
+            .filter((noteItem) => {
+                if (this.userSettings.showFinished) return true;
+                return noteItem.finished === false;
+            });
     }
 
     // Notes
