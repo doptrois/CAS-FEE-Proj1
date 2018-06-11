@@ -1,5 +1,5 @@
 {{#each notes}}
-    <article class="note" data-note-id="{{id}}">
+    <article class="note note--highlight-{{highlight}}{{#if finished}} note--done{{/if}}" data-note-id="{{id}}">
         <div class="note__content" title="Click to expand">
             <h2 class="note__title">{{title}}</h2>
             <small class="note__dates">
@@ -10,12 +10,12 @@
                 <p class="note__paragraph">{{content}}</p>
             </div>
         </div>
-        <p class="note__importance note__importance--{{importance}}" title="Not important">
+        <p class="note__importance note__importance--{{importance}}" title="{{importanceText}}">
             <span class="visuallyhidden">Importance {{importance}} of 3</span>
         </p>
         <div class="note__interactions">
             <div class="note__fieldset">
-                <button class="note__interactions-item note__interactions-item--check note__label" title="finish note"><span class="visuallyhidden">mark as finished</span></button>
+                <button class="note__interactions-item note__interactions-item--check note__label{{#if finished}} note__label--checked{{/if}}" title="{{#if finished}}unfinish {{else}}finish{{/if}} note"><span class="visuallyhidden">{{#if finished}}unfinish {{else}}finish{{/if}} note</span></button>
             </div>
             <div class="note__fieldset">
                 <button class="note__interactions-item note__edit" title="edit note"><span class="visuallyhidden">edit note</span></button>
