@@ -18,6 +18,7 @@
  * Variables
  */
 :root {
+    --black: #000;
     --main-bg-color: #111;
     --layout-gaps: 20px;
     --base-font-color: #fff;
@@ -28,6 +29,7 @@
     --form-input-border: #4a4a4a;
     --note-interactions: 50px;
     --note-interactions-hover: #454545;
+    --sort-highlight-color: #fffb00;
 }
 
 /**
@@ -99,8 +101,10 @@ body {
 }
 
 .button--active,
-.button--active:hover {
-    background-color: var(--brighter-grey);
+.button--active:hover,
+.button--active:focus {
+    background-color: var(--sort-highlight-color);
+    color: var(--black);
     position: relative;
     top: -5px;
 }
@@ -111,7 +115,7 @@ body {
     height: 0;
     border-style: solid;
     border-width: 10px 14px 0 14px;
-    border-color: var(--brighter-grey) transparent transparent transparent;
+    border-color: var(--sort-highlight-color) transparent transparent transparent;
     position: absolute;
     bottom: -10px;
     left: 50%;
@@ -241,17 +245,26 @@ body {
 .note__importance {
     grid-area: note-importance;
     margin: 0;
-    background-color: var(--brighter-grey);
+    background-color: var(--base-font-color);
     cursor: help;
+}
+
+.note__importance--0 {
+    background-image:
+        linear-gradient(
+            to right,
+            var(--brighter-grey) 0%,
+            var(--brighter-grey) 100%
+        );
 }
 
 .note__importance--1 {
     background-image:
         linear-gradient(
             to right,
-            var(--base-font-color),
-            var(--base-font-color) 10%,
-            transparent 10%
+            transparent,
+            transparent 10%,
+            var(--brighter-grey) 10%
         );
 }
 
@@ -259,9 +272,9 @@ body {
     background-image:
         linear-gradient(
             to right,
-            var(--base-font-color),
-            var(--base-font-color) 50%,
-            transparent 50%
+            transparent,
+            transparent 50%,
+            var(--brighter-grey) 50%
         );
 }
 
@@ -269,10 +282,14 @@ body {
     background-image:
         linear-gradient(
             to right,
-            var(--base-font-color),
-            var(--base-font-color) 100%,
+            transparent,
+            transparent 100%,
             transparent 100%
         );
+}
+
+.note--highlight-importance .note__importance {
+    background-color: var(--sort-highlight-color);
 }
 
 .note__content {
@@ -313,6 +330,8 @@ body {
 
 .note__date {
     cursor: default;
+    display: inline-block;
+    position: relative;
 }
 
 .note__date::before {
@@ -331,6 +350,11 @@ body {
 
 .note__date--deadline::before {
     content: "\f1e2";
+}
+
+.note--highlight-creationdate .note__date--created,
+.note--highlight-deadlinedate .note__date--deadline {
+    color: var(--sort-highlight-color);
 }
 
 .note__paragraph {
