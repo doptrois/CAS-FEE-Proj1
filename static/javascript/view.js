@@ -35,9 +35,48 @@ export default class View {
         note.classList.toggle('note--deleted');
     }
 
+    markSelectedSortOption(option) {
+        document.querySelectorAll('[data-notes-sort]').forEach((el) => {
+            if (el.dataset.notesSort === option) return el.classList.add('button--active');
+            return el.classList.remove('button--active');
+        });
+    }
+
+    markUnmarkShowFinished() {
+        document.querySelector('[data-notes-show-finished]').classList.toggle('button--active');
+    }
+
     updateShownNotes(notes) {
+        notes.map((note) => {
+            switch (note.importance) {
+            case 0:
+                Object.assign(note, { importanceText: 'Not important' });
+                return note;
+                break; // eslint-disable-line no-unreachable
+            case 1:
+                Object.assign(note, { importanceText: 'Important' });
+                return note;
+                break; // eslint-disable-line no-unreachable
+            case 2:
+                Object.assign(note, { importanceText: 'Very important' });
+                return note;
+                break; // eslint-disable-line no-unreachable
+            case 3:
+                Object.assign(note, { importanceText: 'Extremely important' });
+                return note;
+                break; // eslint-disable-line no-unreachable
+            default:
+                return note;
+                break; // eslint-disable-line no-unreachable
+            }
+        }).map((note) => {
+            Object.assign(note, { highlight: this.model.userSettings.sortOption.toLowerCase() });
+            return note;
+        });
         fetch(this.templates.note)
             .then(response => response.text())
-            .then(data => console.log(Handlebars.compile(data)({ notes })));
+            .then((data) => {
+                document.querySelector('.notes').innerHTML = Handlebars.compile(data)({ notes });
+            });
     }
 }

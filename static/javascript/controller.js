@@ -47,6 +47,7 @@ export default class Controller {
         this.model.setCurrentStyle();
     }
     onSortOptionChange(option) {
+        this.view.markSelectedSortOption(option);
         this.model.setSortOption(option);
 
         switch (option) {
@@ -65,8 +66,25 @@ export default class Controller {
         }
     }
     onShowFinishedChange() {
-        // this.view.XYZ();
         this.model.setShowFinished();
+        const notes = (() => {
+            switch (this.model.userSettings.sortOption) {
+            case 'creationDate':
+                return this.model.getNewestNotes();
+                break; // eslint-disable-line no-unreachable
+            case 'deadlineDate':
+                return this.model.getUpcomingNotes();
+                break; // eslint-disable-line no-unreachable
+            case 'importance':
+                return this.model.getMostImportantNotes();
+                break; // eslint-disable-line no-unreachable
+            default:
+                return this.model.getNewestNotes();
+                break; // eslint-disable-line no-unreachable
+            }
+        })();
+        this.view.markUnmarkShowFinished();
+        this.view.updateShownNotes(notes);
     }
 
     // Sort events
@@ -88,12 +106,12 @@ export default class Controller {
         this.view.expandCollapsNote(id);
     }
     onFinishUnfinishNote(id) {
-        this.view.changeFinishState(id);
         this.model.finishUnfinishNote(id);
+        this.view.changeFinishState(id);
     }
     onDeleteNote(id) {
-        this.view.hideNote(id);
         this.model.deleteNote(id);
+        this.view.hideNote(id);
     }
     onPutNote(contents) {}
     onPostNote(contents) {}
