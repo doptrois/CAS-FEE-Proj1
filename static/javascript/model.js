@@ -165,10 +165,8 @@ export default class Model {
             if (this.userSettings.showFinished) return true;
             return noteItem.finished === false;
         }).sort((a, b) => {
-            const timestampA = Date.parse(new Date(a.creationDate.split('-')[0], a.creationDate.split('-')[1], a.creationDate.split('-')[2]));
-            const timestampB = Date.parse(new Date(b.creationDate.split('-')[0], b.creationDate.split('-')[1], b.creationDate.split('-')[2]));
-            const [a1, a2] = [timestampA, a.importance];
-            const [b1, b2] = [timestampB, b.importance];
+            const [a1, a2] = [new Date(a.creationDate), a.importance];
+            const [b1, b2] = [new Date(b.creationDate), b.importance];
             return b1 - a1 || b2 - a2;
         });
     }
@@ -177,10 +175,8 @@ export default class Model {
             if (this.userSettings.showFinished) return true;
             return noteItem.finished === false;
         }).sort((a, b) => {
-            const timestampA = Date.parse(new Date(a.deadlineDate.split('-')[0], a.deadlineDate.split('-')[1], a.deadlineDate.split('-')[2]));
-            const timestampB = Date.parse(new Date(b.deadlineDate.split('-')[0], b.deadlineDate.split('-')[1], b.deadlineDate.split('-')[2]));
-            const [a1, a2] = [timestampA, a.importance];
-            const [b1, b2] = [timestampB, b.importance];
+            const [a1, a2] = [new Date(a.deadlineDate), a.importance];
+            const [b1, b2] = [new Date(b.deadlineDate), b.importance];
             return a1 - b1 || b2 - a2;
         });
     }
@@ -189,11 +185,8 @@ export default class Model {
             if (this.userSettings.showFinished) return true;
             return noteItem.finished === false;
         }).sort((a, b) => {
-            const timestampA = Date.parse(new Date(a.deadlineDate.split('-')[0], a.deadlineDate.split('-')[1], a.deadlineDate.split('-')[2]));
-            const timestampB = Date.parse(new Date(b.deadlineDate.split('-')[0], b.deadlineDate.split('-')[1], b.deadlineDate.split('-')[2]));
-
-            const [a1, a2] = [a.importance, timestampA];
-            const [b1, b2] = [b.importance, timestampB];
+            const [a1, a2] = [a.importance, new Date(a.deadlineDate)];
+            const [b1, b2] = [b.importance, new Date(b.deadlineDate)];
             return b1 - a1 || a2 - b2;
         });
     }
