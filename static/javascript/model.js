@@ -76,6 +76,60 @@ export default class Model {
                     importance: 3,
                     finished: true,
                 },
+                {
+                    id: 6,
+                    title: 'Example Seven',
+                    content: 'Lorem ipsum',
+                    creationDate: '2014-06-02',
+                    deadlineDate: '2018-09-14',
+                    importance: 2,
+                    finished: false,
+                },
+                {
+                    id: 7,
+                    title: 'Example Eight',
+                    content: 'Lorem ipsum',
+                    creationDate: '2014-06-02',
+                    deadlineDate: '2018-09-14',
+                    importance: 0,
+                    finished: false,
+                },
+                {
+                    id: 8,
+                    title: 'Example Nine',
+                    content: 'Lorem ipsum',
+                    creationDate: '2012-06-02',
+                    deadlineDate: '2018-09-14',
+                    importance: 3,
+                    finished: false,
+                },
+                {
+                    id: 9,
+                    title: 'Example Ten',
+                    content: 'Lorem ipsum',
+                    creationDate: '2012-11-02',
+                    deadlineDate: '2012-12-01',
+                    importance: 3,
+                    finished: false,
+                },
+                {
+                    id: 10,
+                    title: 'Example Eleven',
+                    content: 'Lorem ipsum',
+                    creationDate: '2012-11-02',
+                    deadlineDate: '2012-12-01',
+                    importance: 1,
+                    finished: false,
+                },
+                {
+                    id: 11,
+                    title: 'Example Twelve',
+                    content: 'Lorem ipsum',
+                    creationDate: '2012-11-02',
+                    deadlineDate: '2012-12-01',
+                    importance: 0,
+                    finished: false,
+                },
             ];
 
             localStorage.NoteItems = JSON.stringify(notes);
@@ -107,32 +161,41 @@ export default class Model {
 
     // Sorted notes
     getNewestNotes() {
-        return this.noteItems.sort((a, b) => {
-            const timestampA = Date.parse(new Date(a.creationDate.split('-')[0], a.creationDate.split('-')[1], a.creationDate.split('-')[2]));
-            const timestampB = Date.parse(new Date(b.creationDate.split('-')[0], b.creationDate.split('-')[1], b.creationDate.split('-')[2]));
-            return timestampA < timestampB;
-        }).filter((noteItem) => {
+        return this.noteItems.filter((noteItem) => {
             if (this.userSettings.showFinished) return true;
             return noteItem.finished === false;
+        }).sort((a, b) => {
+            const timestampA = Date.parse(new Date(a.creationDate.split('-')[0], a.creationDate.split('-')[1], a.creationDate.split('-')[2]));
+            const timestampB = Date.parse(new Date(b.creationDate.split('-')[0], b.creationDate.split('-')[1], b.creationDate.split('-')[2]));
+            const [a1, a2] = [timestampA, a.importance];
+            const [b1, b2] = [timestampB, b.importance];
+            return b1 - a1 || b2 - a2;
         });
     }
     getUpcomingNotes() {
-        return this.noteItems.sort((a, b) => {
-            const timestampA = Date.parse(new Date(a.deadlineDate.split('-')[0], a.deadlineDate.split('-')[1], a.deadlineDate.split('-')[2]));
-            const timestampB = Date.parse(new Date(b.deadlineDate.split('-')[0], b.deadlineDate.split('-')[1], b.deadlineDate.split('-')[2]));
-            return timestampA > timestampB;
-        }).filter((noteItem) => {
+        return this.noteItems.filter((noteItem) => {
             if (this.userSettings.showFinished) return true;
             return noteItem.finished === false;
+        }).sort((a, b) => {
+            const timestampA = Date.parse(new Date(a.deadlineDate.split('-')[0], a.deadlineDate.split('-')[1], a.deadlineDate.split('-')[2]));
+            const timestampB = Date.parse(new Date(b.deadlineDate.split('-')[0], b.deadlineDate.split('-')[1], b.deadlineDate.split('-')[2]));
+            const [a1, a2] = [timestampA, a.importance];
+            const [b1, b2] = [timestampB, b.importance];
+            return a1 - b1 || b2 - a2;
         });
     }
     getMostImportantNotes() {
-        return this.noteItems
-            .sort((a, b) => a.importance < b.importance)
-            .filter((noteItem) => {
-                if (this.userSettings.showFinished) return true;
-                return noteItem.finished === false;
-            });
+        return this.noteItems.filter((noteItem) => {
+            if (this.userSettings.showFinished) return true;
+            return noteItem.finished === false;
+        }).sort((a, b) => {
+            const timestampA = Date.parse(new Date(a.deadlineDate.split('-')[0], a.deadlineDate.split('-')[1], a.deadlineDate.split('-')[2]));
+            const timestampB = Date.parse(new Date(b.deadlineDate.split('-')[0], b.deadlineDate.split('-')[1], b.deadlineDate.split('-')[2]));
+
+            const [a1, a2] = [a.importance, timestampA];
+            const [b1, b2] = [b.importance, timestampB];
+            return b1 - a1 || a2 - b2;
+        });
     }
 
     // Notes
