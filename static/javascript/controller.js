@@ -4,6 +4,24 @@ export default class Controller {
         this.view = view;
 
         // Event handlers
+        this.view.markSelectedSortOption(this.model.userSettings.sortOption);
+        switch (this.model.userSettings.sortOption) {
+        case 'creationDate':
+            this.onShowNewestNotes();
+            break;
+        case 'deadlineDate':
+            this.onShowUpcomingNotes();
+            break;
+        case 'importance':
+            this.onShowMostImportantNotes();
+            break;
+        default:
+            this.onShowNewestNotes();
+        }
+        if (this.model.userSettings.showFinished) {
+            this.view.markUnmarkShowFinished();
+        }
+
         // Style switcher
         document.body.addEventListener('click', (event) => {
             const elem = event.target.closest('.button--switcher');
