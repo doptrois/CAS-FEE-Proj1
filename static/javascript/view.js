@@ -49,6 +49,7 @@ export default class View {
 
     updateShownNotes(notes) {
         notes.map((note) => {
+            Object.assign(note, { highlight: this.model.userSettings.sortOption.toLowerCase() });
             switch (note.importance) {
             case 0:
                 Object.assign(note, { importanceText: 'Not important' });
@@ -70,9 +71,6 @@ export default class View {
                 return note;
                 break; // eslint-disable-line no-unreachable
             }
-        }).map((note) => {
-            Object.assign(note, { highlight: this.model.userSettings.sortOption.toLowerCase() });
-            return note;
         });
         fetch(this.templates.note)
             .then(response => response.text())
