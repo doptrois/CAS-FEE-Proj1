@@ -69,11 +69,11 @@ export default class Controller {
         this.view.expandCollapsNote(id);
     }
     onFinishUnfinishNote(id) {
-        this.model.finishUnfinishNote(id);
+        this.model.setNoteState(id, 'finished');
         this.view.changeFinishState(id);
     }
     onDeleteNote(id) {
-        this.model.deleteNote(id);
+        this.model.setNoteState(id, 'deleted');
         this.view.hideNote(id);
     }
     onPutNote(contents) {}

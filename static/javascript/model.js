@@ -200,24 +200,17 @@ export default class Model {
     }
 
     // Notes
-    finishUnfinishNote(id) {
+    setNoteState(id, property) {
         this.noteItems.map((noteItem) => {
             if (noteItem.id === id) {
-                return Object.assign(noteItem, { finished: !noteItem.finished });
+                if (property === 'finished') return Object.assign(noteItem, { finished: !noteItem.finished });
+                if (property === 'deleted') return Object.assign(noteItem, { deleted: true });
             }
             return noteItem;
         });
         localStorage.NoteItems = JSON.stringify(this.noteItems);
     }
-    deleteNote(id) {
-        this.noteItems.map((noteItem) => {
-            if (noteItem.id === id) {
-                return Object.assign(noteItem, { deleted: true });
-            }
-            return noteItem;
-        });
-        localStorage.NoteItems = JSON.stringify(this.noteItems);
-    }
+
     putNote(note) { return note; }
     postNote(note) { return note; }
 }
