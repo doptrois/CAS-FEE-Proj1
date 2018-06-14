@@ -219,7 +219,7 @@ body {
  */
 .notes {
     grid-area: notes;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     padding-right: 10px;
 }
