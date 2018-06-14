@@ -30,6 +30,7 @@ export default class Model {
                     deadlineDate: '2020-12-28',
                     importance: 0,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 1,
@@ -39,6 +40,7 @@ export default class Model {
                     deadlineDate: '2015-12-23',
                     importance: 1,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 2,
@@ -48,6 +50,7 @@ export default class Model {
                     deadlineDate: '2012-12-01',
                     importance: 2,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 3,
@@ -57,6 +60,7 @@ export default class Model {
                     deadlineDate: '2028-10-01',
                     importance: 3,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 4,
@@ -66,6 +70,7 @@ export default class Model {
                     deadlineDate: '2018-12-29',
                     importance: 0,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 5,
@@ -75,6 +80,7 @@ export default class Model {
                     deadlineDate: '2018-09-14',
                     importance: 3,
                     finished: true,
+                    deleted: false,
                 },
                 {
                     id: 6,
@@ -84,6 +90,7 @@ export default class Model {
                     deadlineDate: '2018-09-14',
                     importance: 2,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 7,
@@ -93,6 +100,7 @@ export default class Model {
                     deadlineDate: '2018-09-14',
                     importance: 0,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 8,
@@ -102,6 +110,7 @@ export default class Model {
                     deadlineDate: '2018-09-14',
                     importance: 3,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 9,
@@ -111,6 +120,7 @@ export default class Model {
                     deadlineDate: '2012-12-01',
                     importance: 3,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 10,
@@ -120,6 +130,7 @@ export default class Model {
                     deadlineDate: '2012-12-01',
                     importance: 1,
                     finished: false,
+                    deleted: false,
                 },
                 {
                     id: 11,
@@ -129,6 +140,7 @@ export default class Model {
                     deadlineDate: '2012-12-01',
                     importance: 0,
                     finished: false,
+                    deleted: false,
                 },
             ];
 
@@ -162,8 +174,8 @@ export default class Model {
     // Sorted notes
     getNewestNotes() {
         return this.noteItems.filter((noteItem) => {
-            if (this.userSettings.showFinished) return true;
-            return noteItem.finished === false;
+            if (this.userSettings.showFinished && !noteItem.deleted) return true;
+            return noteItem.finished === false && !noteItem.deleted;
         }).sort((a, b) => {
             const [a1, a2] = [new Date(a.creationDate), a.importance];
             const [b1, b2] = [new Date(b.creationDate), b.importance];
@@ -172,8 +184,8 @@ export default class Model {
     }
     getUpcomingNotes() {
         return this.noteItems.filter((noteItem) => {
-            if (this.userSettings.showFinished) return true;
-            return noteItem.finished === false;
+            if (this.userSettings.showFinished && !noteItem.deleted) return true;
+            return noteItem.finished === false && !noteItem.deleted;
         }).sort((a, b) => {
             const [a1, a2] = [new Date(a.deadlineDate), a.importance];
             const [b1, b2] = [new Date(b.deadlineDate), b.importance];
@@ -182,8 +194,8 @@ export default class Model {
     }
     getMostImportantNotes() {
         return this.noteItems.filter((noteItem) => {
-            if (this.userSettings.showFinished) return true;
-            return noteItem.finished === false;
+            if (this.userSettings.showFinished && !noteItem.deleted) return true;
+            return noteItem.finished === false && !noteItem.deleted;
         }).sort((a, b) => {
             const [a1, a2] = [a.importance, new Date(a.deadlineDate)];
             const [b1, b2] = [b.importance, new Date(b.deadlineDate)];
@@ -202,9 +214,14 @@ export default class Model {
         localStorage.NoteItems = JSON.stringify(this.noteItems);
     }
     deleteNote(id) {
-        this.noteItems = this.noteItems.filter(noteItem => noteItem.id !== id);
+        this.noteItems.map((noteItem) => {
+            if (noteItem.id === id) {
+                return Object.assign(noteItem, { deleted: true });
+            }
+            return noteItem;
+        });
         localStorage.NoteItems = JSON.stringify(this.noteItems);
     }
-    putNote(contents) { return contents; }
-    postNote(contents) { return contents; }
+    putNote(note) { return note; }
+    postNote(note) { return note; }
 }
