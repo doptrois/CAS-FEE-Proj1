@@ -233,6 +233,10 @@ body {
     border: 1px dotted var(--brighter-grey);
 }
 
+.note:last-child {
+    margin-bottom: 0;
+}
+
 .note--hidden {
     display: none;
 }
@@ -299,6 +303,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     cursor: pointer;
+    user-select: none;
 }
 
 .note__title {
