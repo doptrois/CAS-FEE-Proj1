@@ -182,34 +182,20 @@ export default class Model {
     }
 
     // Sorted notes
-    getNewestNotes() {
+    getNotes(option) {
         return this.noteItems.filter((noteItem) => {
             if (this.userSettings.showFinished && !noteItem.deleted) return true;
             return noteItem.finished === false && !noteItem.deleted;
         }).sort((a, b) => {
-            const [a1, a2] = [new Date(a.creationDate), a.importance];
-            const [b1, b2] = [new Date(b.creationDate), b.importance];
-            return b1 - a1 || b2 - a2;
-        });
-    }
-    getUpcomingNotes() {
-        return this.noteItems.filter((noteItem) => {
-            if (this.userSettings.showFinished && !noteItem.deleted) return true;
-            return noteItem.finished === false && !noteItem.deleted;
-        }).sort((a, b) => {
+            if (option === 'creationDate') {
+                const [a1, a2] = [new Date(a.creationDate), a.importance];
+                const [b1, b2] = [new Date(b.creationDate), b.importance];
+                return b1 - a1 || b2 - a2;
+            }
             const [a1, a2] = [new Date(a.deadlineDate), a.importance];
             const [b1, b2] = [new Date(b.deadlineDate), b.importance];
-            return a1 - b1 || b2 - a2;
-        });
-    }
-    getMostImportantNotes() {
-        return this.noteItems.filter((noteItem) => {
-            if (this.userSettings.showFinished && !noteItem.deleted) return true;
-            return noteItem.finished === false && !noteItem.deleted;
-        }).sort((a, b) => {
-            const [a1, a2] = [a.importance, new Date(a.deadlineDate)];
-            const [b1, b2] = [b.importance, new Date(b.deadlineDate)];
-            return b1 - a1 || a2 - b2;
+            if (option === 'deadlineDate') return a1 - b1 || b2 - a2;
+            return b2 - a2 || a1 - b1;
         });
     }
 

@@ -4,20 +4,7 @@ export default class Controller {
         this.view = view;
 
         // Event handlers
-        this.view.markSelectedSortOption(this.model.userSettings.sortOption);
-        switch (this.model.userSettings.sortOption) {
-        case 'creationDate':
-            this.onShowNewestNotes();
-            break;
-        case 'deadlineDate':
-            this.onShowUpcomingNotes();
-            break;
-        case 'importance':
-            this.onShowMostImportantNotes();
-            break;
-        default:
-            this.onShowNewestNotes();
-        }
+        this.onSortOptionChange(this.model.userSettings.sortOption);
         if (this.model.userSettings.showFinished) {
             this.view.markUnmarkShowFinished();
         }
@@ -67,55 +54,13 @@ export default class Controller {
     onSortOptionChange(option) {
         this.view.markSelectedSortOption(option);
         this.model.setSortOption(option);
-
-        switch (option) {
-        case 'creationDate':
-            this.onShowNewestNotes();
-            break;
-        case 'deadlineDate':
-            this.onShowUpcomingNotes();
-            break;
-        case 'importance':
-            this.onShowMostImportantNotes();
-            break;
-        default:
-            this.onShowNewestNotes();
-            break;
-        }
+        const notes = this.model.getNotes(this.model.userSettings.sortOption);
+        this.view.updateShownNotes(notes);
     }
     onShowFinishedChange() {
         this.model.setShowFinished();
-        const notes = (() => {
-            switch (this.model.userSettings.sortOption) {
-            case 'creationDate':
-                return this.model.getNewestNotes();
-                break; // eslint-disable-line no-unreachable
-            case 'deadlineDate':
-                return this.model.getUpcomingNotes();
-                break; // eslint-disable-line no-unreachable
-            case 'importance':
-                return this.model.getMostImportantNotes();
-                break; // eslint-disable-line no-unreachable
-            default:
-                return this.model.getNewestNotes();
-                break; // eslint-disable-line no-unreachable
-            }
-        })();
+        const notes = this.model.getNotes(this.model.userSettings.sortOption);
         this.view.markUnmarkShowFinished();
-        this.view.updateShownNotes(notes);
-    }
-
-    // Sort events
-    onShowNewestNotes() {
-        const notes = this.model.getNewestNotes();
-        this.view.updateShownNotes(notes);
-    }
-    onShowUpcomingNotes() {
-        const notes = this.model.getUpcomingNotes();
-        this.view.updateShownNotes(notes);
-    }
-    onShowMostImportantNotes() {
-        const notes = this.model.getMostImportantNotes();
         this.view.updateShownNotes(notes);
     }
 
