@@ -233,7 +233,7 @@ body {
     border: 1px dotted var(--brighter-grey);
 }
 
-.note--deleted {
+.note--hidden {
     display: none;
 }
 

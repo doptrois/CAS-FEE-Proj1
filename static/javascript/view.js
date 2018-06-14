@@ -22,6 +22,7 @@ export default class View {
         const note = document.querySelector(`[data-note-id="${id}"]`);
         note.classList.toggle('note--done');
         note.querySelector('.note__interactions-item--check').classList.toggle('note__label--checked');
+        if (!this.model.userSettings.showFinished) note.classList.add('note--hidden');
     }
 
     expandCollapsNote(id) {
@@ -32,7 +33,7 @@ export default class View {
 
     hideNote(id) {
         const note = document.querySelector(`[data-note-id="${id}"]`);
-        note.classList.toggle('note--deleted');
+        note.classList.toggle('note--hidden');
     }
 
     markSelectedSortOption(option) {
