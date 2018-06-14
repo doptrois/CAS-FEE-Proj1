@@ -1,6 +1,6 @@
 {{#each notes}}
     <article class="note note--highlight-{{highlight}}{{#if finished}} note--done{{/if}}" data-note-id="{{id}}">
-        <div class="note__content" title="Click to expand">
+        <div class="note__content" title="Click to expand/collapse">
             <h2 class="note__title">{{title}}</h2>
             <small class="note__dates">
                 <time class="note__date note__date--created" title="Creation date" datetime="{{creationDate}}">{{creationDate}}</time><span class="insivible">,</span>
