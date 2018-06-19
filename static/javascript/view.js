@@ -3,7 +3,7 @@ export default class View {
         this.model = model;
         this.templates = {
             note: '../hbs-templates/note.hbs',
-            editNote: '../hbs-templates/edit-note.hbs',
+            addEditNote: '../hbs-templates/add-edit-note.hbs',
             sort: '../hbs-templates/sort.hbs',
         };
         document.querySelector('.container').classList.add(`container--${this.model.userSettings.currentStyle}`);
@@ -48,34 +48,30 @@ export default class View {
     }
 
     updateShownNotes(notes) {
-        notes.map((note) => {
-            Object.assign(note, { highlight: this.model.userSettings.sortOption.toLowerCase() });
-            switch (note.importance) {
-            case 0:
-                Object.assign(note, { importanceText: 'Not important' });
-                return note;
-                break; // eslint-disable-line no-unreachable
-            case 1:
-                Object.assign(note, { importanceText: 'Important' });
-                return note;
-                break; // eslint-disable-line no-unreachable
-            case 2:
-                Object.assign(note, { importanceText: 'Very important' });
-                return note;
-                break; // eslint-disable-line no-unreachable
-            case 3:
-                Object.assign(note, { importanceText: 'Extremely important' });
-                return note;
-                break; // eslint-disable-line no-unreachable
-            default:
-                return note;
-                break; // eslint-disable-line no-unreachable
-            }
-        });
+        const sortOption = this.model.userSettings.sortOption.toLowerCase();
+        notes.map(note => Object.assign(note, { highlight: sortOption }));
         fetch(this.templates.note)
             .then(response => response.text())
             .then((data) => {
                 document.querySelector('.notes').innerHTML = Handlebars.compile(data)({ notes });
             });
+    }
+
+    openAddEditView(id) {
+        const note = this.model.getNote(id);
+        const emptyNote = this.model.note;
+        fetch(this.templates.addEditNote)
+            .then(response => response.text())
+            .then((data) => {
+                if (id) {
+                    document.body.insertAdjacentHTML('beforeend', Handlebars.compile(data)({ note }));
+                } else {
+                    document.body.insertAdjacentHTML('beforeend', Handlebars.compile(data)({ note: emptyNote }));
+                }
+            });
+    }
+
+    closeAddEditView() {
+        document.querySelector('.modal').remove();
     }
 }

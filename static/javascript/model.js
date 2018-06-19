@@ -1,4 +1,3 @@
-
 export default class Model {
     constructor() {
         if (!localStorage.UserSettings) {
@@ -157,6 +156,19 @@ export default class Model {
             localStorage.NoteItems = JSON.stringify(notes);
         }
         this.noteItems = JSON.parse(localStorage.NoteItems);
+
+        this.note = [
+            {
+                id: this.noteItems.length,
+                title: '',
+                content: '',
+                creationDate: (new Date()).toISOString().split('T')[0],
+                deadlineDate: (new Date()).toISOString().split('T')[0],
+                importance: 0,
+                finished: false,
+                deleted: false,
+            },
+        ];
     }
 
     // User settings
@@ -179,6 +191,11 @@ export default class Model {
         localStorage.UserSettings = JSON.stringify([
             Object.assign(JSON.parse(localStorage.UserSettings)[0], { showFinished: yesno }),
         ]);
+    }
+
+    // Note get
+    getNote(id) {
+        return this.noteItems.filter(note => note.id === id);
     }
 
     // Sorted notes
@@ -211,6 +228,32 @@ export default class Model {
         localStorage.NoteItems = JSON.stringify(this.noteItems);
     }
 
-    putNote(note) { return note; }
-    postNote(note) { return note; }
+    saveNote(noteData) {
+        if (noteData.id === this.noteItems.length) {
+            // this.noteItems.push({
+            //     id: noteData.id,
+            //     title: noteData.title,
+            //     content: noteData.content,
+            //     creationDate: (new Date()).toISOString().split('T')[0],
+            //     deadlineDate: noteData.deadlineDate,
+            //     importance: noteData.importance,
+            //     finished: false,
+            //     deleted: false,
+            // });
+            // localStorage.NoteItems = JSON.stringify(this.noteItems);
+        } else {
+            this.noteItems.map((noteItem) => {
+                if (noteItem.id === noteData.id) {
+                    return Object.assign(noteItem, {
+                        title: noteData.title,
+                        content: noteData.content,
+                        deadlineDate: noteData.deadlineDate,
+                        importance: noteData.importance,
+                    });
+                }
+                return noteItem;
+            });
+            localStorage.NoteItems = JSON.stringify(this.noteItems);
+        }
+    }
 }
