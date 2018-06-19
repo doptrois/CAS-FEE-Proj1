@@ -1,0 +1,42 @@
+{{#each note}}
+    <div class="modal">
+        <form class="add-edit container container--add-edit" action="#">
+            <fieldset class="add-edit__fieldset">
+                <legend class="visuallyhidden">Note properties</legend>
+                <div class="add-edit__group">
+                    <label class="add-edit__label" for="add-edit__title">Title</label>
+                    <input class="add-edit__input" value="{{title}}" id="add-edit__title" type="text" name="add-edit__title" placeholder="Title" pattern=".{3,}" required autofocus>
+
+                    <label class="add-edit__label" for="add-edit__desciption">Description</label>
+                    <textarea class="add-edit__input add-edit__input--textarea" id="add-edit__desciption" name="add-edit__desciption" placeholder="Description" required>{{content}}</textarea>
+
+                    <label class="add-edit__label" for="add-edit__not-important">Importance</label>
+                    <div class="add-edit__group add-edit__group--importance">
+                        <input class="add-edit__importance-input visuallyhidden" type="radio" id="add-edit__not-important" name="add-edit__importance" value="0" {{#if (eq importance 0)}}checked{{/if}}>
+                        <label class="button button--small button--gaps" for="add-edit__not-important">not important</label>
+
+                        <input class="add-edit__importance-input visuallyhidden" type="radio" id="add-edit__important" name="add-edit__importance" value="1" {{#if (eq importance 1)}}checked{{/if}}>
+                        <label class="button button--small button--gaps" for="add-edit__important">important</label>
+
+                        <input class="add-edit__importance-input visuallyhidden" type="radio" id="add-edit__very-important" name="add-edit__importance" value="2" {{#if (eq importance 2)}}checked{{/if}}>
+                        <label class="button button--small button--gaps" for="add-edit__very-important">very important</label>
+
+                        <input class="add-edit__importance-input visuallyhidden" type="radio" id="add-edit__extremely-important" name="add-edit__importance" value="3" {{#if (eq importance 3)}}checked{{/if}}>
+                        <label class="button button--small button--gaps" for="add-edit__extremely-important">extremely important</label>
+
+                    </div>
+                    <label class="add-edit__label" for="add-edit__date">Deadline</label>
+                    <input class="add-edit__input add-edit__input--date" value="{{deadlineDate}}" type="date" name="add-edit__date" id="add-edit__date" title="Date on which it must be completed" required>
+                </div>
+            </fieldset>
+            <fieldset class="add-edit__fieldset">
+                <legend class="visuallyhidden">Save or cancel note</legend>
+                <div class="add-edit__group add-edit__group--actions">
+                    <input class="visuallyhidden" type="number" id="add-edit__note-id" name="add-edit__note-id" value="{{id}}" disabled>
+                    <button class="button button--cancel-note">Cancel</button>
+                    <button class="button button--save-note"><span class="button__text">Save</span></button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{{/each}}
