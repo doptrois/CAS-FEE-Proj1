@@ -19,7 +19,7 @@ export default class Controller {
             if (finish) this.onFinishUnfinishNote(+finish.closest('.note').dataset.noteId);
 
             // Delete note
-            const del = e.target.closest('.note__interactions-item--delete');
+            const del = e.target.closest('.note__edit--delete');
             if (del) this.onDeleteNote(+del.closest('.note').dataset.noteId);
 
             // Expand/Collapse note
@@ -39,7 +39,7 @@ export default class Controller {
             if (btnAdd) this.view.openAddEditView();
 
             // Edit note
-            const btnEdit = e.target.closest('.note__edit');
+            const btnEdit = e.target.closest('.note__edit--edit');
             if (btnEdit) this.view.openAddEditView(+btnEdit.closest('.note').dataset.noteId);
 
             // Cancel note
@@ -87,7 +87,7 @@ export default class Controller {
         const title = document.getElementById('add-edit__title').value;
         const content = document.getElementById('add-edit__desciption').value;
         const deadlineDate = document.getElementById('add-edit__date').value;
-        const importance = document.querySelector('[name="add-edit__importance"]:checked').value;
+        const importance = +document.querySelector('[name="add-edit__importance"]:checked').value;
         this.model.saveNote({
             id, title, content, deadlineDate, importance,
         });
