@@ -156,8 +156,10 @@ export default class Model {
             localStorage.NoteItems = JSON.stringify(notes);
         }
         this.noteItems = JSON.parse(localStorage.NoteItems);
+    }
 
-        this.note = [
+    getEmptyNote() {
+        return [
             {
                 id: this.noteItems.length,
                 title: '',
@@ -229,18 +231,19 @@ export default class Model {
     }
 
     saveNote(noteData) {
+        debugger;
         if (noteData.id === this.noteItems.length) {
-            // this.noteItems.push({
-            //     id: noteData.id,
-            //     title: noteData.title,
-            //     content: noteData.content,
-            //     creationDate: (new Date()).toISOString().split('T')[0],
-            //     deadlineDate: noteData.deadlineDate,
-            //     importance: noteData.importance,
-            //     finished: false,
-            //     deleted: false,
-            // });
-            // localStorage.NoteItems = JSON.stringify(this.noteItems);
+            this.noteItems.push({
+                id: noteData.id,
+                title: noteData.title,
+                content: noteData.content,
+                creationDate: (new Date()).toISOString().split('T')[0],
+                deadlineDate: noteData.deadlineDate,
+                importance: noteData.importance,
+                finished: false,
+                deleted: false,
+            });
+            localStorage.NoteItems = JSON.stringify(this.noteItems);
         } else {
             this.noteItems.map((noteItem) => {
                 if (noteItem.id === noteData.id) {

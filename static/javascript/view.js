@@ -59,7 +59,7 @@ export default class View {
 
     openAddEditView(id) {
         const note = this.model.getNote(id);
-        const emptyNote = this.model.note;
+        const emptyNote = this.model.getEmptyNote();
         fetch(this.templates.addEditNote)
             .then(response => response.text())
             .then((data) => {
