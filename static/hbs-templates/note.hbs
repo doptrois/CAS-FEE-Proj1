@@ -10,7 +10,7 @@
                 <p class="note__paragraph">{{content}}</p>
             </div>
         </div>
-        <p class="note__importance note__importance--{{importance}}" title="{{importanceText}}">
+        <p class="note__importance note__importance--{{importance}}" title="{{#if (eq importance 0)}}not important{{/if}}{{#if (eq importance 1)}}important{{/if}}{{#if (eq importance 2)}}very important{{/if}}{{#if (eq importance 3)}}extremely important{{/if}}">
             <span class="visuallyhidden">Importance {{importance}} of 3</span>
         </p>
         <div class="note__interactions">
