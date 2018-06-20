@@ -231,7 +231,6 @@ export default class Model {
     }
 
     saveNote(noteData) {
-        debugger;
         if (noteData.id === this.noteItems.length) {
             this.noteItems.push({
                 id: noteData.id,
