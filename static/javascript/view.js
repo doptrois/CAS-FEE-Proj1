@@ -15,7 +15,7 @@ export default class View {
         document
             .querySelector('.container')
             .classList
-            .replace(`container--${this.model.userSettings.currentStyle}`, `container--${style}`);
+            .replace(`container--${style}`, `container--${this.model.userSettings.currentStyle}`);
     }
 
     changeFinishState(id) {
