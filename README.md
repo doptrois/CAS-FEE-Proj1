@@ -4,7 +4,7 @@
 
 1. Download/clone project
 2. run `npm install`
-3. run `node index.js`
+3. run `npm start`
 
 ## UML
 
