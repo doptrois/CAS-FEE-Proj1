@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const methodOverride = require('method-override');
 const path = require('path');
 const logger = require('morgan');
 
@@ -10,15 +11,22 @@ const notesRouter = require('./routes/notes');
 
 const app = express();
 
+// https://www.npmjs.com/package/method-override#examples
+// http://expressjs.com/de/4x/api.html#router.route
+// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+app.use(methodOverride('X-HTTP-Method-Override'));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
 app.use('/', indexRouter);
 app.use('/usersettings', usersettingsRouter);
 app.use('/note', noteRouter);
@@ -30,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
