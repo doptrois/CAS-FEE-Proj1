@@ -2,11 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-const noteController = require('../controller/noteController');
+const notesController = require('../controller/notesController');
 
-router.get('/:id', noteController.getNote);
-router.post('/', noteController.postNote);
-router.put('/:id', noteController.putNote);
-router.delete('/:id', noteController.deleteNote);
+router.get('/:id', notesController.getNote);
+router.post('/', notesController.postNote);
+router.put('/:id', notesController.putNote);
+router.delete('/:id', notesController.deleteNote);
 
 module.exports = router;
