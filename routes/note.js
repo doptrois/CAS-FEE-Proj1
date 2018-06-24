@@ -2,19 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-    res.json([
-        {
-            id: 10,
-            title: '',
-            content: '',
-            creationDate: (new Date()).toISOString().split('T')[0],
-            deadlineDate: (new Date()).toISOString().split('T')[0],
-            importance: 0,
-            finished: false,
-            deleted: false,
-        },
-    ]);
-});
+const noteController = require('../controller/noteController');
+
+router.get('/:id', noteController.getNote);
+router.post('/', noteController.postNote);
+router.put('/:id', noteController.putNote);
+router.delete('/:id', noteController.deleteNote);
 
 module.exports = router;
