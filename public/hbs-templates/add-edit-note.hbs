@@ -1,6 +1,6 @@
 {{#each note}}
     <div class="modal">
-        <form class="add-edit container container--add-edit" action="#">
+        <form class="add-edit container container--add-edit">
             <fieldset class="add-edit__fieldset">
                 <legend class="visuallyhidden">Note properties</legend>
                 <div class="add-edit__group">
@@ -33,8 +33,8 @@
                 <legend class="visuallyhidden">Save or cancel note</legend>
                 <div class="add-edit__group add-edit__group--actions">
                     <input class="visuallyhidden" type="text" id="add-edit__note-id" name="add-edit__note-id" value="{{_id}}">
-                    <button class="button button--cancel-note">Cancel</button>
-                    <button class="button button--save-note"><span class="button__text">Save</span></button>
+                    <button class="button button--cancel-note" type="button">Cancel</button>
+                    <button class="button button--save-note" type="button"><span class="button__text">Save</span></button>
                 </div>
             </fieldset>
         </form>
