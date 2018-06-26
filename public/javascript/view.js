@@ -4,7 +4,6 @@ export default class View {
         this.templates = {
             note: '../hbs-templates/note.hbs',
             addEditNote: '../hbs-templates/add-edit-note.hbs',
-            sort: '../hbs-templates/sort.hbs',
         };
         document.querySelector('.container').classList.add(`container--${this.model.userSettings.currentStyle}`);
     }
@@ -50,7 +49,7 @@ export default class View {
     updateShownNotes(notes) {
         const sortOption = this.model.userSettings.sortOption.toLowerCase();
         notes.map(note => Object.assign(note, { highlight: sortOption }));
-        fetch(this.templates.note)
+        fetch(this.templates.note, { cache: 'force-cache' })
             .then(response => response.text())
             .then((data) => {
                 document.querySelector('.notes').innerHTML = Handlebars.compile(data)({ notes });
@@ -60,7 +59,7 @@ export default class View {
     openAddEditView(id) {
         const note = this.model.getNote(id);
         const emptyNote = this.model.getEmptyNote();
-        fetch(this.templates.addEditNote)
+        fetch(this.templates.addEditNote, { cache: 'force-cache' })
             .then(response => response.text())
             .then((data) => {
                 if (id) {

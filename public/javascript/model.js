@@ -8,7 +8,7 @@ export default class Model {
     getEmptyNote() {
         return [
             {
-                id: this.noteItems.length,
+                _id: '',
                 title: '',
                 content: '',
                 creationDate: (new Date()).toISOString().split('T')[0],
@@ -38,13 +38,11 @@ export default class Model {
 
     // Note get
     getNote(id) {
-        // GET
-        return this.noteItems.filter(note => note.id === id);
+        return this.noteItems.filter(note => note._id === id); // eslint-disable-line no-underscore-dangle, max-len
     }
 
     // Sorted notes
     getNotes(option) {
-        // GET
         return this.noteItems.filter((noteItem) => {
             if (this.userSettings.showFinished && !noteItem.deleted) return true;
             return noteItem.finished === false && !noteItem.deleted;
@@ -64,13 +62,11 @@ export default class Model {
     // Notes
     setNoteState(id, property) {
         this.noteItems.map((noteItem) => {
-            if (noteItem.id === id) {
-                // PUT
+            if (noteItem._id === id) { // eslint-disable-line no-underscore-dangle
                 if (property === 'finished') {
                     this.storage.putNote(id, { finished: !noteItem.finished });
                     return Object.assign(noteItem, { finished: !noteItem.finished });
                 }
-                // DELETE
                 this.storage.deleteNote(id);
                 if (property === 'deleted') return Object.assign(noteItem, { deleted: true });
             }
@@ -79,23 +75,20 @@ export default class Model {
     }
 
     saveNote(noteData) {
-        if (noteData.id === this.noteItems.length) {
-            // POST
-            this.noteItems.push({
-                id: noteData.id,
-                title: noteData.title,
-                content: noteData.content,
+        if (!noteData._id) { // eslint-disable-line no-underscore-dangle
+            delete noteData._id; // eslint-disable-line no-underscore-dangle, no-param-reassign
+            Object.assign(noteData, {
                 creationDate: (new Date()).toISOString().split('T')[0],
-                deadlineDate: noteData.deadlineDate,
-                importance: noteData.importance,
                 finished: false,
                 deleted: false,
             });
-            // localStorage.NoteItems = JSON.stringify(this.noteItems);
+            this.storage.postNote(noteData).then((response) => {
+                this.noteItems.push(response);
+                // da mues dview gupdatet wärde..
+            });
         } else {
-            // PUT
             this.noteItems.map((noteItem) => {
-                if (noteItem.id === noteData.id) {
+                if (noteItem._id === noteData._id) { // eslint-disable-line no-underscore-dangle
                     return Object.assign(noteItem, {
                         title: noteData.title,
                         content: noteData.content,
@@ -105,7 +98,7 @@ export default class Model {
                 }
                 return noteItem;
             });
-            // localStorage.NoteItems = JSON.stringify(this.noteItems);
+            this.storage.putNote(noteData._id, noteData); // eslint-disable-line no-underscore-dangle, max-len
         }
     }
 }
