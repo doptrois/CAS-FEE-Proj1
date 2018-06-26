@@ -90,8 +90,9 @@ export default class Controller {
         const importance = +document.querySelector('[name="add-edit__importance"]:checked').value;
         this.model.saveNote({
             _id, title, content, deadlineDate, importance,
+        }, () => {
+            this.view.closeAddEditView();
+            this.onSortOptionChange(this.model.userSettings.sortOption);
         });
-        this.view.closeAddEditView();
-        this.onSortOptionChange(this.model.userSettings.sortOption);
     }
 }

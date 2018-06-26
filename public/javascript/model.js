@@ -74,7 +74,7 @@ export default class Model {
         });
     }
 
-    saveNote(noteData) {
+    saveNote(noteData, callback) {
         if (!noteData._id) { // eslint-disable-line no-underscore-dangle
             delete noteData._id; // eslint-disable-line no-underscore-dangle, no-param-reassign
             Object.assign(noteData, {
@@ -84,7 +84,7 @@ export default class Model {
             });
             this.storage.postNote(noteData).then((response) => {
                 this.noteItems.push(response);
-                // da mues dview gupdatet wärde..
+                callback();
             });
         } else {
             this.noteItems.map((noteItem) => {
@@ -98,7 +98,9 @@ export default class Model {
                 }
                 return noteItem;
             });
-            this.storage.putNote(noteData._id, noteData); // eslint-disable-line no-underscore-dangle, max-len
+            this.storage.putNote(noteData._id, noteData).then(() => { // eslint-disable-line no-underscore-dangle, max-len
+                callback();
+            });
         }
     }
 }
