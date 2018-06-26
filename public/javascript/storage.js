@@ -1,4 +1,3 @@
-
 export default class Storage {
     putUserSettings(data) {
         return fetch('/usersettings', {
