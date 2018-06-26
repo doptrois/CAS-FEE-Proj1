@@ -4,8 +4,17 @@ import View from './view.js';
 import Controller from './controller.js';
 
 (() => {
-    const storage = new Storage();
-    const model = new Model(storage);
-    const view = new View(model);
-    const controller = new Controller(model, view); // eslint-disable-line no-unused-vars
+    const init = async () => {
+        const notes = await fetch('/notes');
+        const notesJSON = await notes.json();
+
+        const usersettings = await fetch('/usersettings');
+        const usersettingsJSON = await usersettings.json();
+
+        const storage = new Storage();
+        const model = new Model(storage, notesJSON, usersettingsJSON);
+        const view = new View(model);
+        const controller = new Controller(model, view); // eslint-disable-line no-unused-vars
+    };
+    init();
 })();
