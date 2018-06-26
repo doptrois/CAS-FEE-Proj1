@@ -11,9 +11,6 @@ const notesRouter = require('./routes/notes');
 
 const app = express();
 
-// https://www.npmjs.com/package/method-override#examples
-// http://expressjs.com/de/4x/api.html#router.route
-// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 app.use(methodOverride('X-HTTP-Method-Override'));
 
 // view engine setup

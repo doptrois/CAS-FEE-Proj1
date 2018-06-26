@@ -26,10 +26,12 @@ export default class Model {
         this.userSettings.currentStyle = style;
         this.storage.putUserSettings({ currentStyle: style });
     }
+
     setSortOption(option) {
         this.userSettings.sortOption = option;
         this.storage.putUserSettings({ sortOption: option });
     }
+
     setShowFinished() {
         const yesno = !this.userSettings.showFinished;
         this.userSettings.showFinished = yesno;

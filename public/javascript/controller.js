@@ -57,12 +57,14 @@ export default class Controller {
         this.model.setCurrentStyle();
         this.view.changeCurrentStyle();
     }
+
     onSortOptionChange(option) {
         this.model.setSortOption(option);
         this.view.markSelectedSortOption(option);
         const notes = this.model.getNotes(this.model.userSettings.sortOption);
         this.view.updateShownNotes(notes);
     }
+
     onShowFinishedChange() {
         this.model.setShowFinished();
         this.view.markUnmarkShowFinished();
@@ -74,14 +76,17 @@ export default class Controller {
     onExpandCollapsNote(id) {
         this.view.expandCollapsNote(id);
     }
+
     onFinishUnfinishNote(id) {
         this.model.setNoteState(id, 'finished');
         this.view.changeFinishState(id);
     }
+
     onDeleteNote(id) {
         this.model.setNoteState(id, 'deleted');
         this.view.hideNote(id);
     }
+
     onSaveNote() {
         const _id = document.getElementById('add-edit__note-id').value; // eslint-disable-line no-underscore-dangle
         const title = document.getElementById('add-edit__title').value;
