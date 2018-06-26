@@ -88,3 +88,8 @@ function onListening() {
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+/**
+ * Hint for startup
+ */
+console.log(`Server running on: http://localhost:${port}`);
