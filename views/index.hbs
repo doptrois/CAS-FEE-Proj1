@@ -1,0 +1,19 @@
+<h1 class="hidden">{{title}}</h1>
+<div class="container container--overview">
+    <div class="add">
+        <button class="button button--add"><i class="button__icon fa fa-plus"></i><span class="button__text">add note</span></button>
+    </div>
+    <div class="switcher">
+        <button class="button button--switcher"><i class="button__icon fa fa-moon-o"></i><span class="button__text">switch style</span></button>
+    </div>
+    <nav class="sort">
+        <ul class="sort__list">
+            <li class="sort__item"><button class="button button--checkbox button--small" title="Show newer ones first" data-notes-sort="creationDate"><span class="button__text">by creation date</span></button></li>
+            <li class="sort__item"><button class="button button--checkbox button--small" title="Show overdue and next notes first" data-notes-sort="deadlineDate"><span class="button__text">by finish date</span></button></li>
+            <li class="sort__item"><button class="button button--checkbox button--small" title="Show most important first" data-notes-sort="importance"><span class="button__text">by importance</span></button></li>
+            <li class="sort__item"><button class="button button--checkbox button--small" title="Show/Hide finished notes" data-notes-show-finished><span class="button__text">show finished</span></button></li>
+        </ul>
+    </nav>
+    <main class="notes"></main>
+    <aside class="status"></aside>
+</div>

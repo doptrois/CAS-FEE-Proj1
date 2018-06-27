@@ -166,8 +166,8 @@ body {
     grid-template-rows: auto auto 1fr;
     grid-template-areas:
         "add switcher"
-        "sort status"
-        "notes status";
+        "sort sort"
+        "notes notes";
 }
 
 /**
@@ -466,6 +466,7 @@ body {
     grid-area: status;
     background-color: var(--grey);
     padding: 1em;
+    display: none;
 }
 
 /**
