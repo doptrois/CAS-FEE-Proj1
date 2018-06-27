@@ -13,3 +13,7 @@
 ## UML
 
 https://repository.genmymodel.com/doptrois/Notes-App
+
+## PostMan REST API Documentation
+
+https://documenter.getpostman.com/view/4679686/RWEmHG7T
