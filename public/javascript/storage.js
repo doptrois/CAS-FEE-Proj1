@@ -1,4 +1,9 @@
 export default class Storage {
+    constructor(notes, usersettings) {
+        this.userSettings = usersettings[0]; // eslint-disable-line prefer-destructuring
+        this.noteItems = notes;
+    }
+
     putUserSettings(data) {
         return fetch('/usersettings', {
             body: JSON.stringify(data),

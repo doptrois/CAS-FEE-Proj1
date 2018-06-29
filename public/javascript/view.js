@@ -5,23 +5,23 @@ export default class View {
             note: '../hbs-templates/note.hbs',
             addEditNote: '../hbs-templates/add-edit-note.hbs',
         };
-        document.querySelector('.container').classList.add(`container--${this.model.userSettings.currentStyle}`);
+        document.querySelector('.container').classList.add(`container--${this.model.storage.userSettings.currentStyle}`);
     }
 
     // Style switcher
     changeCurrentStyle() {
-        const style = this.model.userSettings.currentStyle === 'black' ? 'white' : 'black';
+        const style = this.model.storage.userSettings.currentStyle === 'black' ? 'white' : 'black';
         document
             .querySelector('.container')
             .classList
-            .replace(`container--${style}`, `container--${this.model.userSettings.currentStyle}`);
+            .replace(`container--${style}`, `container--${this.model.storage.userSettings.currentStyle}`);
     }
 
     changeFinishState(id) {
         const note = document.querySelector(`[data-note-id="${id}"]`);
         note.classList.toggle('note--done');
         note.querySelector('.note__interactions-item--check').classList.toggle('note__label--checked');
-        if (!this.model.userSettings.showFinished) note.classList.add('note--hidden');
+        if (!this.model.storage.userSettings.showFinished) note.classList.add('note--hidden');
     }
 
     expandCollapsNote(id) {
@@ -47,7 +47,7 @@ export default class View {
     }
 
     updateShownNotes(notes) {
-        const sortOption = this.model.userSettings.sortOption.toLowerCase();
+        const sortOption = this.model.storage.userSettings.sortOption.toLowerCase();
         notes.map(note => Object.assign(note, { highlight: sortOption }));
         fetch(this.templates.note, { cache: 'force-cache' })
             .then(response => response.text())

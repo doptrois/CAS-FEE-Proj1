@@ -3,8 +3,8 @@ export default class Controller {
         this.model = model;
         this.view = view;
 
-        this.onSortOptionChange(this.model.userSettings.sortOption);
-        if (this.model.userSettings.showFinished) {
+        this.onSortOptionChange(this.model.storage.userSettings.sortOption);
+        if (this.model.storage.userSettings.showFinished) {
             this.view.markUnmarkShowFinished();
         }
 
@@ -61,14 +61,14 @@ export default class Controller {
     onSortOptionChange(option) {
         this.model.setSortOption(option);
         this.view.markSelectedSortOption(option);
-        const notes = this.model.getNotes(this.model.userSettings.sortOption);
+        const notes = this.model.getNotes(this.model.storage.userSettings.sortOption);
         this.view.updateShownNotes(notes);
     }
 
     onShowFinishedChange() {
         this.model.setShowFinished();
         this.view.markUnmarkShowFinished();
-        const notes = this.model.getNotes(this.model.userSettings.sortOption);
+        const notes = this.model.getNotes(this.model.storage.userSettings.sortOption);
         this.view.updateShownNotes(notes);
     }
 
@@ -97,7 +97,7 @@ export default class Controller {
             _id, title, content, deadlineDate, importance,
         }, () => {
             this.view.closeAddEditView();
-            this.onSortOptionChange(this.model.userSettings.sortOption);
+            this.onSortOptionChange(this.model.storage.userSettings.sortOption);
         });
     }
 }

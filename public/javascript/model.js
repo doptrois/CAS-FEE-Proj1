@@ -1,8 +1,6 @@
 export default class Model {
-    constructor(storage, notes, usersettings) {
+    constructor(storage) {
         this.storage = storage;
-        this.userSettings = usersettings[0]; // eslint-disable-line prefer-destructuring
-        this.noteItems = notes;
     }
 
     getEmptyNote() {
@@ -22,31 +20,31 @@ export default class Model {
 
     // User settings
     setCurrentStyle() {
-        const style = this.userSettings.currentStyle === 'black' ? 'white' : 'black';
-        this.userSettings.currentStyle = style;
+        const style = this.storage.userSettings.currentStyle === 'black' ? 'white' : 'black';
+        this.storage.userSettings.currentStyle = style;
         this.storage.putUserSettings({ currentStyle: style });
     }
 
     setSortOption(option) {
-        this.userSettings.sortOption = option;
+        this.storage.userSettings.sortOption = option;
         this.storage.putUserSettings({ sortOption: option });
     }
 
     setShowFinished() {
-        const yesno = !this.userSettings.showFinished;
-        this.userSettings.showFinished = yesno;
+        const yesno = !this.storage.userSettings.showFinished;
+        this.storage.userSettings.showFinished = yesno;
         this.storage.putUserSettings({ showFinished: yesno });
     }
 
     // Note get
     getNote(id) {
-        return this.noteItems.filter(note => note._id === id); // eslint-disable-line no-underscore-dangle, max-len
+        return this.storage.noteItems.filter(note => note._id === id); // eslint-disable-line no-underscore-dangle, max-len
     }
 
     // Sorted notes
     getNotes(option) {
-        return this.noteItems.filter((noteItem) => {
-            if (this.userSettings.showFinished && !noteItem.deleted) return true;
+        return this.storage.noteItems.filter((noteItem) => {
+            if (this.storage.userSettings.showFinished && !noteItem.deleted) return true;
             return noteItem.finished === false && !noteItem.deleted;
         }).sort((a, b) => {
             if (option === 'creationDate') {
@@ -63,7 +61,7 @@ export default class Model {
 
     // Notes
     setNoteState(id, property) {
-        this.noteItems.map((noteItem) => {
+        this.storage.noteItems.map((noteItem) => {
             if (noteItem._id === id) { // eslint-disable-line no-underscore-dangle
                 if (property === 'finished') {
                     this.storage.putNote(id, { finished: !noteItem.finished });
@@ -85,11 +83,11 @@ export default class Model {
                 deleted: false,
             });
             this.storage.postNote(noteData).then((response) => {
-                this.noteItems.push(response);
+                this.storage.noteItems.push(response);
                 callback();
             });
         } else {
-            this.noteItems.map((noteItem) => {
+            this.storage.noteItems.map((noteItem) => {
                 if (noteItem._id === noteData._id) { // eslint-disable-line no-underscore-dangle
                     return Object.assign(noteItem, {
                         title: noteData.title,

@@ -11,8 +11,8 @@ import Controller from './controller.js';
         const usersettings = await fetch('/usersettings');
         const usersettingsJSON = await usersettings.json();
 
-        const storage = new Storage();
-        const model = new Model(storage, notesJSON, usersettingsJSON);
+        const storage = new Storage(notesJSON, usersettingsJSON);
+        const model = new Model(storage);
         const view = new View(model);
         const controller = new Controller(model, view); // eslint-disable-line no-unused-vars
     };
